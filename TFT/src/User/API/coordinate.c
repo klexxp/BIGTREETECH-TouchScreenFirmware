@@ -54,9 +54,7 @@ void coordinateSetKnown(bool known)
 
 void coordinateSetAxisTarget(AXIS axis,float position)
 {
-  bool r = (axis == E_AXIS)
-          ? relative_e || relative_mode
-          : relative_mode;
+  bool r = (axis == E_AXIS) ? relative_e || relative_mode : relative_mode;
 
   if(r==false)
   {
@@ -115,12 +113,9 @@ void coordinateQuerySetWait(bool wait)
 
 void coordinateQuery(void)
 {
-  if (infoHost.connected == true && infoHost.wait == false)
+  if (infoHost.connected && !infoHost.wait && !queryWait)
   {
-    if (!queryWait)
-    {
-      storeCmd("M114\n");
-      queryWait = true;
-    }
+    storeCmd("M114\n");
+    queryWait = true;
   }
 }
